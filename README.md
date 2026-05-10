@@ -18,27 +18,6 @@ This engine is built to run exactly these kinds of parameterised, time-scheduled
 
 ---
 
-## How it works
-
-```
-main_controller.py
-│
-├── Connects to Binance Testnet
-│
-├── Reads PROFILE_EXECUTION (e.g. "LINKUSDT BUY t=0s, Δq=1.5")
-│         │
-│         └── execution_engine.py
-│                   ├── Parses and validates each step (lot size, min notional)
-│                   ├── Waits the defined delay, then places a market order
-│                   └── On fill → calls analysis_engine.update_from_execution()
-│
-└── Enters periodic loop (every 30s)
-          └── analysis_engine.py
-                    ├── Fetches live prices and balances from Binance
-                    ├── Rebuilds FIFO ledger from full trade history
-                    ├── Computes latent PnL and realized PnL per symbol
-                    └── Writes portfolio_update.csv and order_history.csv
-```
 
 ### Flow diagram
 
